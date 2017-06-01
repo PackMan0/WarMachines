@@ -6,7 +6,7 @@
     {
         private bool stealthMode;
 
-        public Fighter(string name, double attackPoints, double defensePoints, bool initialStealthMode)
+        public Fighter(string name, int attackPoints, int defensePoints, bool initialStealthMode)
             : base(name, 200, attackPoints, defensePoints)
         {
             this.StealthMode = initialStealthMode;

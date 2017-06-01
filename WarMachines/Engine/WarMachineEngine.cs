@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
-
+    using Commands;
     using WarMachines.Interfaces;
 
     public sealed class WarMachineEngine : IWarMachineEngine
@@ -52,15 +52,15 @@
             this.PrintReports(commandResult);
         }
 
-        private IList<ICommand> ReadCommands()
+        private IList<IInputParser> ReadCommands()
         {
-            var commands = new List<ICommand>();
+            var commands = new List<IInputParser>();
 
             var currentLine = Console.ReadLine();
 
             while (!string.IsNullOrEmpty(currentLine))
             {
-                var currentCommand = Command.Parse(currentLine);
+                var currentCommand = InputParser.Parse(currentLine);
                 commands.Add(currentCommand);
 
                 currentLine = Console.ReadLine();
@@ -69,7 +69,7 @@
             return commands;
         }
 
-        private IList<string> ProcessCommands(IList<ICommand> commands)
+        private IList<string> ProcessCommands(IList<IInputParser> commands)
         {
             var reports = new List<string>();
 

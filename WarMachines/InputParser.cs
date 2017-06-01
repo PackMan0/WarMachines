@@ -1,20 +1,18 @@
-﻿namespace WarMachines.Engine
+﻿namespace WarMachines
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
-    using WarMachines.Interfaces;
-
-    public class Command : ICommand
+    public class InputParser : IInputParser
     {
         private const char SplitCommandSymbol = ' ';
 
         private string name;
         private IList<string> parameters;
 
-        private Command(string input)
+        private InputParser(string input)
         {
+            this.parameters = new List<string>();
             this.TranslateInput(input);
         }
 
@@ -24,16 +22,6 @@
             {
                 return this.name;
             }
-
-            private set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentNullException("Name cannot be null or empty.");
-                }
-
-                this.name = value;
-            }
         }
 
         public IList<string> Parameters
@@ -42,21 +30,11 @@
             {
                 return this.parameters;
             }
-
-            private set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("List of strings cannot be null.");
-                }
-
-                this.parameters = value;
-            }
         }
 
-        public static Command Parse(string input)
+        public static InputParser Parse(string input)
         {
-            return new Command(input);
+            return new InputParser(input);
         }
 
         private void TranslateInput(string input)

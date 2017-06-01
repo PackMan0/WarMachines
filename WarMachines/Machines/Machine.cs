@@ -10,12 +10,12 @@
     {
         private string name;
         private IPilot pilot;
-        private double healthPoints;
-        private double attackPoints;
-        private double defensePoints;
+        private int healthPoints;
+        private int attackPoints;
+        private int defensePoints;
         private IList<string> targets;
 
-        public Machine(string name, double healthPoints, double attackPoints, double defensePoints)
+        public Machine(string name, int healthPoints, int attackPoints, int defensePoints)
         {
             this.Name = name;
             this.HealthPoints = healthPoints;
@@ -60,7 +60,7 @@
             }
         }
 
-        public double HealthPoints
+        public int HealthPoints
         {
             get
             {
@@ -73,7 +73,7 @@
             }
         }
 
-        public double AttackPoints
+        public int AttackPoints
         {
             get
             {
@@ -86,7 +86,7 @@
             }
         }
 
-        public double DefensePoints
+        public int DefensePoints
         {
             get
             {

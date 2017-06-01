@@ -8,15 +8,11 @@
 
         IPilot Pilot { get; set; }
 
-        double HealthPoints { get; set; }
+        int HealthPoints { get; set; }
 
-        double AttackPoints { get; }
+        int AttackPoints { get; }
 
-        double DefensePoints { get; }
-
-        IList<string> Targets { get; }
-
-        void Attack(string target);
+        int DefensePoints { get; }
 
         string ToString();
     }

@@ -6,7 +6,7 @@
     {
         private bool defenseMode;
 
-        public Tank(string name, double attackPoints, double defensePoints) 
+        public Tank(string name, int attackPoints, int defensePoints) 
             : base(name, 100, attackPoints, defensePoints)
         {
             this.DefenseMode = true;
