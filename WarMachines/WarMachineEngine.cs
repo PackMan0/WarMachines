@@ -1,60 +1,38 @@
-﻿namespace WarMachines.Engine
+﻿namespace WarMachines
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
     using Commands;
-    using WarMachines.Interfaces;
+    using Factories;
+    using Models;
+    using Providers;
 
     public sealed class WarMachineEngine : IWarMachineEngine
     {
-        private const string InvalidCommand = "Invalid command name: {0}";
-        private const string PilotHired = "Pilot {0} hired";
-        private const string PilotExists = "Pilot {0} is hired already";
-        private const string TankManufactured = "Tank {0} manufactured - attack: {1}; defense: {2}";
-        private const string FighterManufactured = "Fighter {0} manufactured - attack: {1}; defense: {2}; stealth: {3}";
-        private const string MachineExists = "Machine {0} is manufactured already";
-        private const string MachineHasPilotAlready = "Machine {0} is already occupied";
-        private const string PilotNotFound = "Pilot {0} could not be found";
-        private const string MachineNotFound = "Machine {0} could not be found";
-        private const string MachineEngaged = "Pilot {0} engaged machine {1}";
-        private const string InvalidMachineOperation = "Machine {0} does not support this operation";
-        private const string FighterOperationSuccessful = "Fighter {0} toggled stealth mode";
-        private const string TankOperationSuccessful = "Tank {0} toggled defense mode";
-        private const string InvalidAttackTarget = "Tank {0} cannot attack stealth fighter {1}";
-        private const string AttackSuccessful = "Machine {0} was attacked by machine {1} - current health: {2}";
+        private readonly IInputOutputProvider _inputOutputProvider;
+        private readonly ICommandParser _inputParser;
+        private readonly ICommandFactory _commandFactory;
 
-        private static readonly WarMachineEngine SingleInstance = new WarMachineEngine();
-
-        private IMachineFactory factory;
-        private IDictionary<string, IPilot> pilots;
-        private IDictionary<string, IMachine> machines;
-
-        private WarMachineEngine()
+        private WarMachineEngine(IInputOutputProvider inputOutputProvider, ICommandParser inputParser, ICommandFactory commandFactory)
         {
-            this.factory = new MachineFactory();
-            this.pilots = new Dictionary<string, IPilot>();
-            this.machines = new Dictionary<string, IMachine>();
-        }
-
-        public static WarMachineEngine Instance
-        {
-            get
-            {
-                return SingleInstance;
-            }
+            this._inputOutputProvider = inputOutputProvider;
+            this._inputParser = inputParser;
+            this._commandFactory = commandFactory;
         }
 
         public void Start()
         {
-            var commands = this.ReadCommands();
-            var commandResult = this.ProcessCommands(commands);
-            this.PrintReports(commandResult);
+            while (true)
+            {
+                var intput = this._inputOutputProvider.Read();
+                var command = ProcessCommand(intput);
+            }
         }
 
-        private IList<IInputParser> ReadCommands()
+        private IList<ICommandParser> ReadCommands()
         {
-            var commands = new List<IInputParser>();
+            var commands = new List<ICommandParser>();
 
             var currentLine = Console.ReadLine();
 
@@ -69,78 +47,9 @@
             return commands;
         }
 
-        private IList<string> ProcessCommands(IList<IInputParser> commands)
+        private ICommand ProcessCommand(string input)
         {
-            var reports = new List<string>();
-
-            foreach (var command in commands)
-            {
-                string commandResult;
-
-                switch (command.Name)
-                {
-                    case "HirePilot":
-                        var pilotName = command.Parameters[0];
-                        commandResult = this.HirePilot(pilotName);
-                        reports.Add(commandResult);
-                        break;
-
-                    case "Report":
-                        var pilotReporting = command.Parameters[0];
-                        commandResult = this.PilotReport(pilotReporting);
-                        reports.Add(commandResult);
-                        break;
-
-                    case "ManufactureTank":
-                        var tankName = command.Parameters[0];
-                        var tankAttackPoints = double.Parse(command.Parameters[1]);
-                        var tankDefensePoints = double.Parse(command.Parameters[2]);
-                        commandResult = this.ManufactureTank(tankName, tankAttackPoints, tankDefensePoints);
-                        reports.Add(commandResult);
-                        break;
-
-                    case "DefenseMode":
-                        var defenseModeTankName = command.Parameters[0];
-                        commandResult = this.ToggleTankDefenseMode(defenseModeTankName);
-                        reports.Add(commandResult);
-                        break;
-
-                    case "ManufactureFighter":
-                        var fighterName = command.Parameters[0];
-                        var fighterAttackPoints = double.Parse(command.Parameters[1]);
-                        var fighterDefensePoints = double.Parse(command.Parameters[2]);
-                        var fighterStealthMode = command.Parameters[3] == "StealthON" ? true : false;
-                        commandResult = this.ManufactureFighter(fighterName, fighterAttackPoints, fighterDefensePoints, fighterStealthMode);
-                        reports.Add(commandResult);
-                        break;
-
-                    case "StealthMode":
-                        var stealthModeFighterName = command.Parameters[0];
-                        commandResult = this.ToggleFighterStealthMode(stealthModeFighterName);
-                        reports.Add(commandResult);
-                        break;
-
-                    case "Engage":
-                        var selectedPilotName = command.Parameters[0];
-                        var selectedMachineName = command.Parameters[1];
-                        commandResult = this.EngageMachine(selectedPilotName, selectedMachineName);
-                        reports.Add(commandResult);
-                        break;
-
-                    case "Attack":
-                        var attackingMachine = command.Parameters[0];
-                        var defendingMachine = command.Parameters[1];
-                        commandResult = this.AttackMachines(attackingMachine, defendingMachine);
-                        reports.Add(commandResult);
-                        break;
-
-                    default:
-                        reports.Add(string.Format(InvalidCommand, command.Name));
-                        break;
-                }
-            }
-
-            return reports;
+           
         }
 
         private void PrintReports(IList<string> reports)

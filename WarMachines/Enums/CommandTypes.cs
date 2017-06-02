@@ -9,6 +9,7 @@
         ManufactureFighter,
         StealthMode,
         Engage,
-        Attack
+        Attack,
+        Exit
     }
 }

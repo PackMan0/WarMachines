@@ -1,7 +1,5 @@
-﻿namespace WarMachines.Interfaces
+﻿namespace WarMachines
 {
-    using System.Collections.Generic;
-
     public interface IWarMachineEngine
     {
         void Start();

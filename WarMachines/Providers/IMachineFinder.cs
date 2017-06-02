@@ -1,6 +1,6 @@
 ﻿namespace WarMachines.Providers
 {
-    using Interfaces;
+    using Models;
 
     public interface IMachineFinder
     {

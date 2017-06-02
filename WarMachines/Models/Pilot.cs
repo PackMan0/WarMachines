@@ -1,11 +1,9 @@
-﻿namespace WarMachines.Machines
+﻿namespace WarMachines.Models
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
-    using WarMachines.Interfaces;
 
     public class Pilot : IPilot
     {

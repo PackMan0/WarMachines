@@ -1,10 +1,6 @@
-﻿namespace WarMachines.Machines
+﻿namespace WarMachines.Models
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
-
-    using WarMachines.Interfaces;
 
     public abstract class Machine : IMachine
     {
@@ -33,11 +29,6 @@
 
             set
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentNullException("Name cannot be null or empty.");
-                }
-
                 this.name = value;
             }
         }
@@ -51,11 +42,6 @@
 
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("Pilot cannot be null.");
-                }
-
                 this.pilot = value;
             }
         }
@@ -108,11 +94,6 @@
 
             private set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("List of targets cannot be null.");
-                }
-
                 this.targets = value;
             }
         }

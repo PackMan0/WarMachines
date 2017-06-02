@@ -1,4 +1,4 @@
-﻿namespace WarMachines.Interfaces
+﻿namespace WarMachines.Models
 {
     public interface ITank : IMachine
     {

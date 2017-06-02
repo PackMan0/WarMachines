@@ -1,7 +1,5 @@
-﻿namespace WarMachines.Machines
+﻿namespace WarMachines.Models
 {
-    using WarMachines.Interfaces;
-
     public class Fighter : Machine, IFighter
     {
         private bool stealthMode;

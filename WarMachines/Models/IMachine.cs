@@ -1,7 +1,5 @@
-﻿namespace WarMachines.Interfaces
+﻿namespace WarMachines.Models
 {
-    using System.Collections.Generic;
-
     public interface IMachine
     {
         string Name { get; set; }

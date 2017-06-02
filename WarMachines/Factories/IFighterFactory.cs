@@ -1,6 +1,6 @@
 ﻿namespace WarMachines.Factories
 {
-    using Interfaces;
+    using Models;
 
     public interface IFighterFactory
     {
