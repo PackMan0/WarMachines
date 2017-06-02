@@ -10,6 +10,7 @@
         StealthMode,
         Engage,
         Attack,
-        Exit
+        Exit,
+        None
     }
 }

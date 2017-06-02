@@ -57,8 +57,6 @@
     <Compile Include="Factories\IFighterFactory.cs" />
     <Compile Include="Factories\IPilotFactory.cs" />
     <Compile Include="Factories\ITankFactory.cs" />
-    <Compile Include="InputParser.cs" />
-    <Compile Include="ICommandParser.cs" />
     <Compile Include="Enums\CommandTypes.cs" />
     <Compile Include="IWarMachineEngine.cs" />
     <Compile Include="Models\Fighter.cs" />
