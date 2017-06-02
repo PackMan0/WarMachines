@@ -5,6 +5,6 @@
 
     public interface ICommandFactory
     {
-        ICommand GeCommand(CommandTypes type);
+        ICommand GetCommand(CommandTypes type);
     }
 }

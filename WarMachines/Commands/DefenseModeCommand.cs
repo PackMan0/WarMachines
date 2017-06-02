@@ -7,25 +7,25 @@
 
     public class DefenseModeCommand : ICommand
     {
-        private readonly IMachineFinder _machineFinder;
+        private readonly ITankFinder _tankFinder;
 
-        public DefenseModeCommand(IMachineFinder machineFinder)
+        public DefenseModeCommand(ITankFinder tankFinder)
         {
-            this._machineFinder = machineFinder;
+            this._tankFinder = tankFinder;;
         }
 
         public string ExecuteCommand(ICollection<string> args)
         {
-            var machine = (ITank)this._machineFinder.FindMachine(args.First());
+            var tank = this._tankFinder.FindTank(args.First());
 
-            if (machine == null)
+            if (tank == null)
             {
-                return "Machine with that name could not be found.";
+                return "Tank with that name could not be found.";
             }
 
-            machine.ToggleDefenseMode();
+            tank.ToggleDefenseMode();
 
-            return "Tank " + machine.Name + " toggled defense mode";
+            return "Tank " + tank.Name + " toggled defense mode";
 
         }
     }

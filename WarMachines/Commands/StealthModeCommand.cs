@@ -7,16 +7,16 @@
 
     public class StealthModeCommand : ICommand
     {
-        private readonly IMachineFinder _machineFinder;
+        private readonly IFighterFinder _fighterFinder;
 
-        public StealthModeCommand(IMachineFinder machineFinder)
+        public StealthModeCommand(IFighterFinder fighterFinder)
         {
-            this._machineFinder = machineFinder;
+            this._fighterFinder = fighterFinder;
         }
 
         public string ExecuteCommand(ICollection<string> args)
         {
-            var fighter = (IFighter)this._machineFinder.FindMachine(args.First());
+            var fighter = this._fighterFinder.FindFighter(args.First());
 
             if (fighter == null)
             {

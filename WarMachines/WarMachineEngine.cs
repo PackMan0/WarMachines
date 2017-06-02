@@ -1,13 +1,9 @@
 ﻿namespace WarMachines
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using Commands;
     using Enums;
     using Factories;
-    using Models;
     using Providers;
 
     public sealed class WarMachineEngine : IWarMachineEngine
@@ -15,7 +11,7 @@
         private readonly IInputOutputProvider _inputOutputProvider;
         private readonly ICommandFactory _commandFactory;
 
-        private WarMachineEngine(IInputOutputProvider inputOutputProvider, ICommandFactory commandFactory)
+        public WarMachineEngine(IInputOutputProvider inputOutputProvider, ICommandFactory commandFactory)
         {
             this._inputOutputProvider = inputOutputProvider;
             this._commandFactory = commandFactory;
@@ -35,7 +31,7 @@
                         return;
                     }
 
-                    var command = this._commandFactory.GeCommand(commandType);
+                    var command = this._commandFactory.GetCommand(commandType);
                     var result = command.ExecuteCommand(intput.GetRange(1, intput.Count - 1));
 
                     this._inputOutputProvider.Write(result);

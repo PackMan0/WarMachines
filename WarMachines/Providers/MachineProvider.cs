@@ -5,22 +5,24 @@
     using System.Runtime.CompilerServices;
     using Models;
 
-    public class MachineProvider : IFighterAdder, IMachineFinder, IPilotAdder, IPilotFinder, ITankAdder
+    public class MachineProvider : IFighterAdder, IPilotAdder, ITankAdder, IPilotFinder, IFighterFinder, ITankFinder, IMachineFinder
     {
-        private readonly IDictionary<string, IMachine> _machines;
+        private readonly IDictionary<string, IFighter> _fighters;
+        private readonly IDictionary<string, ITank> _tanks;
         private readonly IDictionary<string, IPilot> _pilots;
 
         public MachineProvider()
         {
-            this._machines = new Dictionary<string, IMachine>();
+            this._fighters = new Dictionary<string, IFighter>();
+            this._tanks = new Dictionary<string, ITank>();
             this._pilots = new Dictionary<string, IPilot>();
         }
 
-        private bool AddMachine(IMachine machine)
+        public bool AddFighter(IFighter fighter)
         {
-            if (!this._machines.ContainsKey(machine.Name))
+            if (!this._fighters.ContainsKey(fighter.Name))
             {
-                this._machines.Add(machine.Name, machine);
+                this._fighters.Add(fighter.Name, fighter);
 
                 return true;
             }
@@ -28,26 +30,23 @@
             return false;
         }
 
-        public bool AddFighter(IFighter fighter)
-        {
-            return this.AddMachine(fighter);
-        }
-
-        public IMachine FindMachine(string name)
-        {
-            if (this._machines.ContainsKey(name))
-            {
-                return this._machines[name];
-            }
-
-            return null;
-        }
-
         public bool AddPilot(IPilot pilot)
         {
             if (!this._pilots.ContainsKey(pilot.Name))
             {
                 this._pilots.Add(pilot.Name, pilot);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool AddTank(ITank tank)
+        {
+            if (!this._tanks.ContainsKey(tank.Name))
+            {
+                this._tanks.Add(tank.Name, tank);
 
                 return true;
             }
@@ -65,10 +64,29 @@
             return null;
         }
 
-        public bool AddTank(ITank tank)
+        public IFighter FindFighter(string name)
         {
-            return this.AddMachine(tank);
+            if (this._fighters.ContainsKey(name))
+            {
+                return this._fighters[name];
+            }
+
+            return null;
         }
 
+        public ITank FindTank(string name)
+        {
+            if (this._tanks.ContainsKey(name))
+            {
+                return this._tanks[name];
+            }
+
+            return null;
+        }
+
+        public IMachine FindMachine(string name)
+        {
+            return (IMachine) this.FindFighter(name) ?? this.FindTank(name);
+        }
     }
 }
