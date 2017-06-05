@@ -27,6 +27,10 @@
             {
                 return "Machine with that name could not be found.";
             }
+            else if(machine.Pilot != null)
+            {
+                return "Machine " + machine.Name + " is already occupied.";
+            }
             else
             {
                 pilot.AddMachine(machine);

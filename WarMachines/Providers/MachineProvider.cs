@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using Models;
 
@@ -66,6 +67,13 @@
 
         public IFighter FindFighter(string name)
         {
+            var deatFighters = this._fighters.Where(f => f.Value.HealthPoints <= 0);
+
+            foreach (var dead in deatFighters)
+            {
+                this._fighters.Remove(dead);
+            }
+
             if (this._fighters.ContainsKey(name))
             {
                 return this._fighters[name];
@@ -76,6 +84,14 @@
 
         public ITank FindTank(string name)
         {
+
+            var deatTanks = this._tanks.Where(t => t.Value.HealthPoints <= 0);
+
+            foreach (var dead in deatTanks)
+            {
+                this._tanks.Remove(dead);
+            }
+
             if (this._tanks.ContainsKey(name))
             {
                 return this._tanks[name];

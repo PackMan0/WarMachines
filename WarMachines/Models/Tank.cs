@@ -2,26 +2,23 @@
 {
     public class Tank : Machine, ITank
     {
-        private bool defenseMode;
+        private bool _defenseMode = true;
 
         public Tank(string name, int attackPoints, int defensePoints) 
             : base(name, 100, attackPoints, defensePoints)
         {
-            this.DefenseMode = true;
-            this.DefensePoints += 30;
-            this.AttackPoints -= 40;
         }
 
         public bool DefenseMode
         {
             get
             {
-                return this.defenseMode;
+                return this._defenseMode;
             }
 
             private set
             {
-                this.defenseMode = value;
+                this._defenseMode = value;
             }
         }
 
